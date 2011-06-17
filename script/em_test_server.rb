@@ -2,6 +2,7 @@
 require 'rubygems'
 require 'eventmachine'
 require 'evma_httpserver'
+require 'cgi'
 
 class MyHttpServer < EM::Connection
   include EM::HttpServer
@@ -29,7 +30,7 @@ class MyHttpServer < EM::Connection
     response = EM::DelegatedHttpResponse.new(self)
     response.status = 200
     response.content_type 'text/html'
-    response.content = message
+    response.content = CGI.unescape(message)
 
     EventMachine::Timer.new(time.to_i) do
       response.send_response
