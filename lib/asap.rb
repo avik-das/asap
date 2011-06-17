@@ -1,3 +1,5 @@
+require 'asap/netty'
+
 def Asap
 
 end
