@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 def url path
-    "http://adas-mn:1234" + path
+    "http://localhost:1234" + path
 end
 
 describe Asap do
