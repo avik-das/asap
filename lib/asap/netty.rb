@@ -18,7 +18,7 @@ module Asap
     java_import org.jboss.netty.handler.codec.http.HttpHeaders
 
 
-    def self.get(url)
+    def self.get(url, &callback)
       uri = URI.parse(url)
 
       bootstrap = ClientBootstrap.new(
@@ -28,8 +28,7 @@ module Asap
         )
       )
 
-      response = nil
-      bootstrap.set_pipeline_factory(PipelineFactory.new(lambda { |data| response = data }))
+      bootstrap.set_pipeline_factory(PipelineFactory.new(callback))
 
       # Open a connection
       future = bootstrap.connect(InetSocketAddress.new(uri.host, uri.port))
@@ -41,11 +40,8 @@ module Asap
       request.set_header(HttpHeaders::Names::HOST, uri.host)
       channel.write(request)
 
-      # Wait for the channel to close and then shut down the process
-      channel.getCloseFuture().awaitUninterruptibly()
-      bootstrap.release_external_resources
-
-      response
+      # Close down the channel
+      at_exit { bootstrap.release_external_resources }
     end
   end
 end

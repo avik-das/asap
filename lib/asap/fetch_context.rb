@@ -4,23 +4,28 @@ module Asap
   class FetchContext
     def initialize
       @result = []
-      @index  = 0
+      @semaphore = java.util.concurrent.Semaphore.new(0)
     end
 
     def get(url, &blk)
-      res = Asap::Netty.get(url)
-
-      if block_given?
-        nested = Asap(res, &blk)
-        res = [res, nested]
+      target_index = @result.size
+      @result << nil
+      Asap::Netty.get(url) do |result|
+        if blk
+          Thread.new do
+            nested = Asap(result, &blk)
+            @result[target_index] = [result, nested]
+            @semaphore.release
+          end
+        else
+          @result[target_index] = result
+          @semaphore.release
+        end
       end
-
-      @result[@index] = res
-      @index += 1
     end
 
     def join
-      # no threading yet
+      @semaphore.acquire(@result.size)
     end
 
     attr_reader :result
