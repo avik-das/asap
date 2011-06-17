@@ -6,5 +6,5 @@ gem 'rake'
 gem 'ruby-debug'
 gem 'ruby-debug-ide'
 
-gem 'eventmachine'
-gem 'eventmachine_httpserver', :require => 'evma_httpserver'
+#gem 'eventmachine'
+#gem 'eventmachine_httpserver', :require => 'evma_httpserver'
