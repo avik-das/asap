@@ -41,6 +41,26 @@ describe Asap do
     end
   end
 
+  context 'given three gets' do
+    it 'should return three results' do
+      Asap do
+        get url("/1/goodbye")
+        get url("/1/cruel")
+        get url("/1/world")
+      end.should == ["goodbye","cruel","world"]
+    end
+
+    it 'should run in parallel' do
+      start = Time.now
+      Asap do
+        get url("/1/goodbye")
+        get url("/1/cruel")
+        get url("/1/world")
+      end
+      (Time.now - start).should < 2
+    end
+  end
+
   context 'given one nested get' do
     it 'should return one nested result' do
       Asap do
