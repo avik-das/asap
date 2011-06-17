@@ -1,7 +1,5 @@
 require 'asap/netty'
 
-require 'open-uri'
-
 module Asap
   class FetchContext
     def initialize
@@ -10,7 +8,7 @@ module Asap
     end
 
     def get(url, &blk)
-      res = open(url) {|r| r.read}
+      res = Asap::Netty.get(url)
 
       if block_given?
         nested = Asap(res, &blk)
