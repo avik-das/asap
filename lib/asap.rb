@@ -2,32 +2,25 @@ require 'asap/netty'
 
 require 'open-uri'
 
-def Asap &blk
-  Asap.execute blk
+def Asap *args, &blk
+  context = Asap::FetchContext.new
+  context.instance_exec *args, &blk
+  context.join
+  context.result
 end
 
 module Asap
-  class << self
-    def execute blk, *args
-      context = Asap::FetchContext.new
-      context.instance_exec *args, &blk
-      context.join
-      context.result
-    end
-  end
-
   class FetchContext
     def initialize
       @result = []
-      @index   = 0
+      @index  = 0
     end
 
     def get url, &blk
-      #@result[@index] = open(url) {|r| r.read}
-
       res = open(url) {|r| r.read}
+
       if block_given?
-        nested = Asap.execute blk, res
+        nested = Asap res, &blk
         res = [res, nested]
       end
 

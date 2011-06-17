@@ -81,4 +81,12 @@ describe Asap do
         ["/0/world1", ["world1"]]]
     end
   end
+
+  context 'given additional arguments' do
+    it 'should pass the arguments to its block' do
+      Asap("/0/hello") do |path|
+        get url(path)
+      end.should == ["hello"]
+    end
+  end
 end
