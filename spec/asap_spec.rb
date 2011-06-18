@@ -102,6 +102,23 @@ describe Asap do
     end
   end
 
+  context 'given deep nesting' do
+    it 'should return a deeply-nested result' do
+      Asap do
+        get url("/0/%2F0%2F%252F0%252F%25252F0%25252Fhello") do |r1|
+          get url(r1) do |r2|
+            get url(r2) do |r3|
+              get url(r3)
+            end
+          end
+        end
+      end.should ==
+        [["/0/%2F0%2F%252F0%252Fhello", [
+          ["/0/%2F0%2Fhello", [
+            ["/0/hello", ["hello"]]]]]]]
+    end
+  end
+
   context 'given additional arguments' do
     it 'should pass the arguments to its block' do
       Asap("/0/hello") do |path|
