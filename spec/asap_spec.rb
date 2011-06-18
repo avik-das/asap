@@ -109,4 +109,24 @@ describe Asap do
       end.should == ["hello"]
     end
   end
+
+  context 'given a map over the gets' do
+    it 'should behave like the gets are listed out' do
+      Asap do
+        (1..10).each do |i|
+          get url("/1/#{i}")
+        end
+      end.should == (1..10).to_a.map(&:to_s)
+    end
+
+    it 'should behave like the gets are listed out' do
+      start = Time.now
+      Asap do
+        (1..10).each do |i|
+          get url("/1/#{i}")
+        end
+      end
+      (Time.now - start).should < 2
+    end
+  end
 end
