@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Grep Spurrier", "Avik Das"]
   s.email       = ["gspurrier@linkedin.com", "adas@linkedin.com"]
   s.homepage    = "http://rubygems.org/gems/didactic_clock"
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = %q{A JRuby library for parallel fetches.}
+  s.description = %q{A JRuby library for parallel fetches.}
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency("mongrel")
   s.add_development_dependency("rspec")
+  s.add_development_dependency("rake")
   
   # Event machine does not run well on JRuby, but the main library requires
   # JRuby.  The following gems should be installed separately on an MRI
