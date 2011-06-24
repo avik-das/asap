@@ -21,13 +21,6 @@ module Asap
     def self.get(url, &callback)
       uri = URI.parse(url)
 
-      bootstrap = ClientBootstrap.new(
-        NioClientSocketChannelFactory.new(
-          Executors.newCachedThreadPool,
-          Executors.newCachedThreadPool
-        )
-      )
-
       bootstrap.set_pipeline_factory(PipelineFactory.new(callback))
 
       # Open a connection
@@ -39,9 +32,20 @@ module Asap
       request = DefaultHttpRequest.new(HttpVersion::HTTP_1_0, HttpMethod::GET, uri.path)
       request.set_header(HttpHeaders::Names::HOST, uri.host)
       channel.write(request)
+    end
 
-      # Close down the channel
-      at_exit { bootstrap.release_external_resources }
+    private
+
+    def self.bootstrap
+      if not @bootstrap
+        @bootstrap = ClientBootstrap.new(
+          NioClientSocketChannelFactory.new(
+            Executors.newCachedThreadPool,
+            Executors.newCachedThreadPool))
+
+        at_exit { @bootstrap.release_external_resources }
+      end
+      @bootstrap
     end
   end
 end

@@ -1,0 +1,21 @@
+
+
+
+data =
+    [
+        ["44\n64\n6\n21\n87", # /user/followers
+            
+           
+           
+            ["Follower #44",  # /user/followers/44
+             "Follower #64",  # /user/followers/64
+             "Follower #6" ,  # /user/followers/6
+              
+              
+              
+             "Follower #21", "Follower #87"]]] # etc.
+
+
+
+
+
