@@ -49,7 +49,7 @@ data related to the Nth follower respectively.
 == QUICK START =========================================================
 
   # Check out repository
-  git clone git://gitorious.qa.linkedin.com/inday-july-2011/asap.git
+  git clone git://gitorious.qa.linkedin.com/inday-june-2011/asap.git
   cd asap
 
   # Make sure you're using JRuby
@@ -57,21 +57,22 @@ data related to the Nth follower respectively.
   # Install the dependencies
   gem install bundler
   bundle install
+  rake install
 
   # start the server (run in a separate window)
-  script/test-server.rb
-
-  # run the example script
-  cd lib # must run from this directory
-  ../examples/followers-example.rb
+  bin/test-server.rb
 
   # run the tests
-  cd ..
   rake spec
+
+  # compare the times required to fetch the same data if it is retrieved
+  # serially versus if it is retrieved with ASAP.
+  time examples/followers-example-serial.rb
+  time examples/followers-example.rb
   
   # There is an alternate, EventMachine-based server, but it does not
   # implement the /user/followers/ routes. EventMachine does not run
   # well with JRuby, while the main library requires JRuby. However,
   # the EventMachine-based server runs well on MRI, assuming the
-  # correct gems are installed (see the Gemfile).
+  # correct gems are installed (see the gemspec).
   script/em_test_server.rb
