@@ -47,9 +47,13 @@ data related to the Nth follower respectively.
            "Follower #11"]]]
 
 == QUICK START =========================================================
+  
+  gem install asap
+
+== DEVELOPMENT QUICK START =============================================
 
   # Check out repository
-  git clone git://gitorious.qa.linkedin.com/inday-june-2011/asap.git
+  git clone git://github.com/avik-das/asap.git
   cd asap
 
   # Make sure you're using JRuby
@@ -60,7 +64,7 @@ data related to the Nth follower respectively.
   rake install
 
   # start the server (run in a separate window)
-  bin/test-server.rb
+  asap-mongrel-test-server
 
   # run the tests
   rake spec
