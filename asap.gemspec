@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.email       = ["gspurrier@linkedin.com", "adas@linkedin.com"]
   s.homepage    = "http://rubygems.org/gems/didactic_clock"
   s.summary     = %q{A JRuby library for parallel fetches.}
-  s.description = %q{A JRuby library for parallel fetches.}
+  s.description = %q{A JRuby library for parallel fetches. Provides an embedded-domain specific language for declaring dependencies between resources.}
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
